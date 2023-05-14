@@ -1,0 +1,211 @@
+:root {
+  --border-color: #a4a995;
+  --border-color-light: #d1d1c8;
+  --background-color: #edede9;
+  --background-color-sudoku: #f2f2f0;
+  --text-color-mutable: #7d938a;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background-color);
+
+  position: relative;
+}
+
+.notesButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: 50px;
+
+  margin: 1em;
+
+  color: var(--border-color);
+  font-weight: 600;
+
+  background-color: var(--background-color-sudoku);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.notesButton:hover {
+  background-color: var(--border-color);
+  color: var(--background-color-sudoku);
+}
+
+.notesButtonActive {
+  background-color: var(--border-color);
+  color: var(--background-color-sudoku);
+}
+
+.loading {
+  width: 744px;
+  height: 738px;
+
+  background-color: var(--background-color-sudoku);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  /* width: 100%; */
+  /* height: 50px; */
+  /* background-color: var(--background-color); */
+
+  grid-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 75px;
+  height: 30px;
+
+  color: var(--border-color);
+  font-weight: 600;
+
+  background-color: var(--background-color-sudoku);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.buttons > div:hover {
+  background-color: var(--border-color);
+  color: var(--background-color-sudoku);
+}
+
+.selectedButton {
+  background-color: var(--border-color);
+  color: var(--background-color-sudoku);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+
+  width: fit-content;
+  background-color: var(--background-color-sudoku);
+}
+
+.grid > *:nth-child(-n + 9) {
+  border-top: 1px solid var(--border-color);
+}
+
+.grid > *:nth-child(9n + 1) {
+  border-left: 1px solid var(--border-color);
+}
+
+.grid > *:nth-child(3n) {
+  border-right: 1px solid var(--border-color);
+}
+
+.grid
+  > *:is(
+    :nth-child(n + 19):nth-child(-n + 27),
+    :nth-child(n + 46):nth-child(-n + 54),
+    :nth-child(-n + 81):nth-child(n + 73)
+  ) {
+  border-bottom: 1px solid var(--border-color); /* Altere a espessura, estilo e cor da borda conforme necessário */
+}
+
+.grid
+  > *:is(
+    :nth-child(n):nth-child(-n + 18),
+    :nth-child(n + 28):nth-child(-n + 45),
+    :nth-child(n + 55):nth-child(-n + 72),
+
+  ) {
+  border-bottom: 1px solid var(--border-color-light); /* Altere a espessura, estilo e cor da borda conforme necessário */
+}
+
+.grid > *:is(:nth-child(3n-2), :nth-child(3n-1)) {
+  border-right: 0.5px solid var(--border-color-light);
+}
+
+.cell {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 80px;
+  height: 80px;
+  background-color: transparent;
+
+  font-size: 2rem;
+
+  border: none;
+}
+
+.fixed {
+  cursor: default;
+}
+
+.mutable {
+  cursor: pointer;
+  color: var(--text-color-mutable);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.mutable:hover {
+  background-color: #7d938a10;
+}
+
+.selected {
+  background-color: #7d938a30 !important;
+}
+
+.neighbor {
+  background-color: #7d938a10 !important;
+}
+
+.note {
+  position: absolute;
+  top: 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: calc(100% - 20px);
+  height: 100%;
+  margin-top: 0.5rem;
+
+  font-size: 1rem;
+  color: #7d938a;
+}
+
+/* #edede9: Fundo */
+/* #b3c6b7: Um tom suave de verde-água, que harmoniza com o tom esverdeado do fundo e acrescenta um pouco de cor sem ser muito chamativo. */
+/* #d1d1c8: Um tom de cinza neutro, semelhante ao tom de base, mas ligeiramente mais escuro e menos esverdeado, que pode ser usado para textos e elementos menos destacados. */
+/* #a4a995: Um tom de verde oliva suave, que acrescenta um pouco de cor e se harmoniza com o tema esverdeado. */
+/* #f2f2f0: Um tom de branco quase puro, com um leve toque de cinza esverdeado, que pode ser usado para realçar elementos e criar contraste. */
+/* #7d938a: Um tom mais escuro de verde-água, que pode ser usado para destaques e elementos que precisam de contraste em relação ao fundo. */
