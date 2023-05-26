@@ -53,10 +53,10 @@ function App() {
   const [original, { refetch }] = createResource(difficulty, fetchSudoku);
 
   createEffect(() => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    if (width < 900 || height < 900) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    console.log(navigator.userAgent);
+    setIsMobile(isMobile);
+    if (isMobile) {
       setIsMobile(true);
       return;
     }
