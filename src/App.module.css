@@ -1,3 +1,10 @@
+/* #edede9: Fundo */
+/* #b3c6b7: Um tom suave de verde-água, que harmoniza com o tom esverdeado do fundo e acrescenta um pouco de cor sem ser muito chamativo. */
+/* #d1d1c8: Um tom de cinza neutro, semelhante ao tom de base, mas ligeiramente mais escuro e menos esverdeado, que pode ser usado para textos e elementos menos destacados. */
+/* #a4a995: Um tom de verde oliva suave, que acrescenta um pouco de cor e se harmoniza com o tema esverdeado. */
+/* #f2f2f0: Um tom de branco quase puro, com um leve toque de cinza esverdeado, que pode ser usado para realçar elementos e criar contraste. */
+/* #7d938a: Um tom mais escuro de verde-água, que pode ser usado para destaques e elementos que precisam de contraste em relação ao fundo. */
+
 :root {
   --border-color: #a4a995;
   --border-color-light: #d1d1c8;
@@ -20,6 +27,15 @@
 }
 
 .notesButton {
+  left: 0;
+}
+
+.helpButton {
+  right: 0;
+}
+
+.helpButton,
+.notesButton {
   position: absolute;
   top: 0;
   right: 0;
@@ -40,10 +56,13 @@
   border: 1px solid var(--border-color);
   border-radius: 5px;
 
+  transition: all 0.2s ease-in-out;
+
   cursor: pointer;
 }
 
-.notesButton:hover {
+.notesButton:hover,
+.helpButton:hover {
   background-color: var(--border-color);
   color: var(--background-color-sudoku);
 }
@@ -51,13 +70,6 @@
 .notesButtonActive {
   background-color: var(--border-color);
   color: var(--background-color-sudoku);
-}
-
-.loading {
-  width: 744px;
-  height: 738px;
-
-  background-color: var(--background-color-sudoku);
 }
 
 .buttons {
@@ -203,9 +215,58 @@
   color: #7d938a;
 }
 
-/* #edede9: Fundo */
-/* #b3c6b7: Um tom suave de verde-água, que harmoniza com o tom esverdeado do fundo e acrescenta um pouco de cor sem ser muito chamativo. */
-/* #d1d1c8: Um tom de cinza neutro, semelhante ao tom de base, mas ligeiramente mais escuro e menos esverdeado, que pode ser usado para textos e elementos menos destacados. */
-/* #a4a995: Um tom de verde oliva suave, que acrescenta um pouco de cor e se harmoniza com o tema esverdeado. */
-/* #f2f2f0: Um tom de branco quase puro, com um leve toque de cinza esverdeado, que pode ser usado para realçar elementos e criar contraste. */
-/* #7d938a: Um tom mais escuro de verde-água, que pode ser usado para destaques e elementos que precisam de contraste em relação ao fundo. */
+dialog {
+  position: relative;
+
+  width: 700px;
+  padding: 30px;
+
+  border-radius: 20px;
+  border: 0;
+
+  box-shadow: 0 5px 30px 0 rgb(0 0 0 / 10%);
+  animation: fadeIn 1s ease both;
+
+  &::backdrop {
+    animation: fadeIn 1s ease both;
+    background: rgb(255 255 255 / 10%);
+    z-index: 2;
+    backdrop-filter: blur(10px);
+  }
+}
+
+dialog > button {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+
+  background: none;
+  border: none;
+  filter: grayscale(1);
+
+  transition: ease filter, transform 0.3s;
+  cursor: pointer;
+  transform-origin: center;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  height: 100vh;
+  padding: 20px;
+}

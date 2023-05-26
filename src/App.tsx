@@ -34,11 +34,7 @@ const DIFFICULTY: Difficulty[] = ["easy", "medium", "hard", "expert", "evil"];
 const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3001";
 
 async function fetchSudoku(difficulty: Difficulty = "hard") {
-  const response = await fetch(`${SERVER_URL}/${difficulty}`, {
-    headers: {
-      "x-requested-with": "XMLHttpRequest",
-    },
-  });
+  const response = await fetch(`${SERVER_URL}/${difficulty}`);
 
   const data: Original = await response.json();
   return data;
@@ -50,9 +46,26 @@ function App() {
   const [selected, setSelected] = createSignal(-1);
   const [notesMode, setNotesMode] = createSignal(false);
 
+  const [isMobile, setIsMobile] = createSignal(false);
+
   const [difficulty, setDifficulty] = createSignal("medium" as Difficulty);
 
   const [original, { refetch }] = createResource(difficulty, fetchSudoku);
+
+  createEffect(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    if (width < 900 || height < 900) {
+      setIsMobile(true);
+      return;
+    }
+
+    setTimeout(() => {
+      //@ts-ignore
+      window.information.showModal();
+    }, 500);
+  });
 
   createEffect(() => {
     const data = original();
@@ -104,7 +117,7 @@ function App() {
     function handleKeypress(evt: KeyboardEvent) {
       const pressedKey = evt.key;
 
-      if (pressedKey === "/") {
+      if (pressedKey === "c") {
         setNotesMode((prev) => !prev);
         return;
       }
@@ -205,36 +218,120 @@ function App() {
   });
 
   return (
-    <div class={styles.container} onClick={() => setSelected(-1)}>
-      <Logo />
+    <Show when={!isMobile()} fallback={<Mobile />}>
+      <div class={styles.container} onClick={() => setSelected(-1)}>
+        <ModalInformation />
+        <Logo />
 
-      <div
-        class={`${styles.notesButton} ${
-          notesMode() && styles.notesButtonActive
-        }`}
-        onClick={() => setNotesMode((prev) => !prev)}
-      >
-        {notesMode() ? "notes" : "numbers"}
+        <div
+          class={styles.helpButton}
+          onClick={() =>
+            //@ts-ignore
+            window.information.showModal()
+          }
+        >
+          help!
+        </div>
+
+        <div
+          class={`${styles.notesButton} ${
+            notesMode() && styles.notesButtonActive
+          }`}
+          onClick={() => setNotesMode((prev) => !prev)}
+        >
+          {notesMode() ? "notes" : "numbers"}
+        </div>
+
+        <div class={styles.buttons}>
+          {DIFFICULTY.map((d) => (
+            <div
+              class={`${styles.button} ${
+                d === difficulty() && styles.selectedButton
+              }`}
+              onClick={() => handleDifficultyClick(d)}
+            >
+              {d}
+            </div>
+          ))}
+        </div>
+
+        <Show when={!original.loading} fallback={<EmptyBoard />}>
+          {Sudoku()}
+        </Show>
       </div>
-
-      <div class={styles.buttons}>
-        {DIFFICULTY.map((d) => (
-          <div
-            class={`${styles.button} ${
-              d === difficulty() && styles.selectedButton
-            }`}
-            onClick={() => handleDifficultyClick(d)}
-          >
-            {d}
-          </div>
-        ))}
-      </div>
-
-      <Show when={!original.loading} fallback={<div class={styles.loading} />}>
-        {Sudoku()}
-      </Show>
-    </div>
+    </Show>
   );
 }
 
 export default App;
+
+function Mobile() {
+  return (
+    <div class={styles.mobile}>
+      <h1>Sorry, this game is not available on mobile devices</h1>
+    </div>
+  );
+}
+
+function EmptyBoard() {
+  const emptySudoku = new Array(81).fill(0);
+
+  return (
+    <div class={styles.grid}>
+      <For each={emptySudoku}>
+        {() => {
+          return <div class={styles.cell}>{""}</div>;
+        }}
+      </For>
+    </div>
+  );
+}
+
+function ModalInformation() {
+  return (
+    <dialog id="information" style={styles.dialog}>
+      <h1>How to play</h1>
+      <p>
+        The objective is to fill a 9×9 grid with digits so that each column,
+        each row, and each of the nine 3×3 subgrids that compose the grid
+        contains all of the digits from 1 to 9.
+      </p>
+      <p>
+        Each cell can contain numbers from 1 to 9 or be empty. The game starts
+        with some cells already filled.
+      </p>
+      <p>
+        To fill a cell, click on it and type the number you want to fill it
+        with. To delete a number, click on the cell and press the backspace
+        button.
+      </p>
+      <p>
+        You can also use the notes mode by pressing the "N" key. In this mode,
+        you can add notes to a cell by clicking on it and typing the number you
+        want to add. To delete a note, click on the cell and press the
+        backspace.
+      </p>
+      <p>
+        When you finish the sudoku, the game will check if you win. If you win,
+        you will see a message saying "You win!". If you lose, you will see a
+        message saying "Try again!".
+      </p>
+      <p>
+        You can change the difficulty by clicking on the buttons on the top
+        corner.
+      </p>
+      <p>
+        This game was made by{" "}
+        <a href="https://github.com/gadfaria/sudoku">Gabiru</a>.
+      </p>
+      <button
+        onClick={() =>
+          //@ts-ignore
+          window.information.close()
+        }
+      >
+        ❌
+      </button>
+    </dialog>
+  );
+}
