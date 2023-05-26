@@ -1,34 +1,18 @@
-## Usage
+# sudoku
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+![SolidJS](https://img.shields.io/badge/SolidJS-2c4f7c?style=for-the-badge&logo=solid&logoColor=c8c9cb)
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+This is a project for a Sudoku game developed using the [SolidJS](https://www.solidjs.com/). The objective of this project is to provide an interactive implementation of the Sudoku game, with features to generate random Sudoku puzzles and allow users to play.
 
-```bash
-$ npm install # or pnpm install or yarn install
-```
+The Sudoku puzzles are generated using the endpoints provided by sudoku.com. To accomplish this, a server has been created to serve as a proxy.
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
 
-## Available Scripts
+***To run the project, it is necessary to first start the proxy located inside the "server" folder.***
 
-In the project directory, you can run:
 
-### `npm dev` or `npm start`
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+<h5 align="center">
+  ☕ Code and Coffee
+</h5>

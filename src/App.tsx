@@ -115,9 +115,9 @@ function App() {
     const index = selected();
 
     function handleKeypress(evt: KeyboardEvent) {
-      const pressedKey = evt.key;
+      const pressedKey = evt.key.toLowerCase();
 
-      if (pressedKey === "c") {
+      if (pressedKey === "n") {
         setNotesMode((prev) => !prev);
         return;
       }
