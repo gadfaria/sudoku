@@ -6,9 +6,10 @@ This is a project for a Sudoku game developed using [SolidJS](https://www.solidj
 
 The Sudoku puzzles are generated using the endpoints provided by sudoku.com. To accomplish this, a server has been created to serve as a proxy.
 
-
-***To run the project, it is necessary to first start the proxy located inside the "server" folder.***
-
+You can start the project with the following command:
+```bash
+yarn start
+```
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

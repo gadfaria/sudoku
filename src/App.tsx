@@ -31,10 +31,8 @@ interface Original {
 
 const DIFFICULTY: Difficulty[] = ["easy", "medium", "hard", "expert", "evil"];
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3001";
-
 async function fetchSudoku(difficulty: Difficulty = "hard") {
-  const response = await fetch(`${SERVER_URL}/${difficulty}`);
+  const response = await fetch(`/${difficulty}`);
 
   const data: Original = await response.json();
   return data;

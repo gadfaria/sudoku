@@ -1,9 +1,16 @@
+import cors from "cors";
 import express from "express";
 import fetch from "node-fetch";
-import cors from "cors";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 app.use(cors());
+
+app.use(express.static(path.resolve(__dirname, "dist")));
 
 app.use("/:difficulty", async (req, res) => {
   try {
